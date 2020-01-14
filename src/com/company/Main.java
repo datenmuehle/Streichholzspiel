@@ -1,232 +1,150 @@
 package com.company;
-import java.util.Scanner;
+
 import java.util.Random;
+import java.util.Scanner;
+import java.util.Arrays;
 
 public class Main {
 
-    public static void main(String[] args) {
-// a.tippel@micromata.de
-        int Matchsticks = 10;
-        int MatchsticksInt = 0;
-        int Chose = 0;
-        int difficulty;
-        int OwnAmount;
-        int max;
-        int min;
+    public static void main(String[] args)
+    {
+        Welcome();
+    }
+    public static void Welcome()
+    {
+        System.out.println("Welcome to the Matchstick GAME");
+        System.out.println("Would you like to start?");
+        System.out.println("[1] Yes [2] No");
+        Chose();
+    }
 
-        max = 3;
-        min = 1;
-        OwnAmount = 0;
-        difficulty = 0;
-        MatchsticksInt = 10;
+    public static void StartGame()
+    {
+        //main Settings
+        int[] ReihenArray = {0,1,2,3,4,5};
+        int[] StickArray = {0,1,2,3,4,5};
+        int[] EmptyArray = {0,0,0,0,0,0};
+        int Chose = 0;
+        int Chose1 = 0;
+        int Chose2 = 0;
+        int sum = 15;
+        int sum2 = 0;
+        int i = 0;
+        int round=0;
+
+
         Scanner Input = new Scanner(System.in);
         Random rand = new Random();
 
-        System.out.println("[!]THE MATCHSTICK GAME[!]");
-        System.out.println("");
-        System.out.println("What do you want to do?");
-        System.out.println("[1] Start new Game");
-        System.out.println("[2] How to play this Game");
-        System.out.println("[3] Change difficulty");
+
+
+        while(sum >= 3) {
+
+            if(Arrays.equals(StickArray, EmptyArray))
+            {
+
+            }
+
+            if((round % 2) == 0) {
+                if(Arrays.equals(StickArray, EmptyArray))
+                {
+                    End2();
+                    break;
+                }
+                //System.out.println("Player 2 Wins!"); (Optional)
+                System.out.println("Player 1, your turn!");
+            } else {
+                if(Arrays.equals(StickArray, EmptyArray))
+                {
+                    End1();
+                    break;
+                }
+                //System.out.println("Player one wins"); (Optional)
+                System.out.println("Player 2, your turn!");
+            }
+
+            for (i = 0; i != 6; i++) {
+                sum2 = sum += StickArray[i];
+                System.out.println(StickArray[i]);
+            }
+
+
+
+            System.out.println("Which row do you want to play? (1,2,3,4,5)");
+            Chose1 = Input.nextInt();
+            Chose2 = StickArray[Chose1];
+
+            System.out.println("You play in Row: " + ReihenArray[Chose1] + ". Only " + ReihenArray[Chose2] + " Are Available");
+            System.out.println("How many would you like to take?");
+            if (ReihenArray[Chose2] > 3) {
+                System.out.println("Note: YOU CAN ONLY TAKE A MAXIMUM OF 3!");
+            }
+            Chose2 = Input.nextInt();
+
+            if (Chose2 >= 4) {
+                System.out.println("Can you read?!");
+                System.out.println("Quitting...");
+                Welcome();
+            }
+            StickArray[Chose1] -= Chose2;
+            System.out.println("In row " + Chose1 + " are now " + StickArray[Chose1] + " left!");
+
+            round++;
+        }
+
+    }
+
+    public static void Chose()
+    {
+        int Chose = 0;
+        Scanner Input = new Scanner(System.in);
         Chose = Input.nextInt();
 
-        if (Chose == 1) {
-            System.out.println("[1] Singleplayer");
-            System.out.println("[2] Multiplayer");
-            Chose = Input.nextInt();
-
-            if (Chose == 1) {
-                System.out.println("Which row do you want to play? (1,2,3,4,5)");
-                Chose = Input.nextInt();
-                int[] ReihenArray = {0,1,2,3,4,5};
-                int[] StickArray = {0,1,2,3,4,5};
-                System.out.println(ReihenArray[Chose]);
-                System.out.println("You play in Row: " + ReihenArray[Chose] + " Only " + StickArray[Chose] + " Are Available");
-                Chose = Input.nextInt();
-                
-
-                while (Matchsticks >= 1) {
-
-                    System.out.println("[+]Player1: Choose an amount of Matchsticks(1-3):");
-                    MatchsticksInt = Input.nextInt();
-                    Matchsticks = Matchsticks - MatchsticksInt;
-                    System.out.println("[+]You took: " + MatchsticksInt + " Matchsticks");
-                    System.out.println("[+]There are: " + Matchsticks + " left!");
-                    if (Matchsticks <= 0) {
-                        System.out.println("[+]Round is over, Player 1 WINS");
-                        return;
-                    } else
-                        System.out.println("[+] Bot: Choose an amount of Matchsticks(1-3):");
-                    int randomNum = rand.nextInt((max - min) + 1) + min;
-                    MatchsticksInt = randomNum;
-                    Matchsticks = Matchsticks - MatchsticksInt;
-                    System.out.println("[+]The Bot took: " + MatchsticksInt + " Matchsticks");
-                    System.out.println("[+]There are: " + Matchsticks + " left!");
-                    if (Matchsticks <= 0) {
-                        System.out.println("[+]Round is over, Bot WINS");
-
-                    }
-                }
-            } else if (Chose == 2) {
-                while (Matchsticks >= 1) {
-
-
-                    System.out.println("[+] Player1: Choose an amount of Matchsticks(1-3):");
-                    MatchsticksInt = Input.nextInt();
-                    Matchsticks = Matchsticks - MatchsticksInt;
-                    System.out.println("[+]You took: " + MatchsticksInt + " Matchsticks");
-                    System.out.println("[+]There are: " + Matchsticks + " left!");
-
-
-
-                    if (Matchsticks <= 0) {
-                        System.out.println("[+]Round is over, Player 1 WINS");
-                        return;
-                    } else
-
-                        System.out.println("[+]Player2: Choose an amount of Matchsticks(1-3):");
-                    MatchsticksInt = Input.nextInt();
-                    Matchsticks = Matchsticks - MatchsticksInt;
-                    System.out.println("[+]You took: " + MatchsticksInt + " Matchsticks");
-                    System.out.println("[+]There are: " + Matchsticks + " left!");
-
-                    if (Matchsticks <= 0) {
-                        System.out.println("[+]Round is over, Player 2 WINS");
-                        return;
-                    }
-                }
-            }
-        } else if (Chose == 2) {
-            System.out.println("To win this Game, you have to be the last one who takes the last Matchsticks.");
-            System.out.println("But note, that you can only take 3 Matchsticks out only out of the Same Row!");
-        } else if (Chose == 3) {
-
-            System.out.println("Which difficulty do you prefer?");
-            System.out.println("[1] Easy (10 Sticks)");
-            System.out.println("[2] Normal (20 Sticks|Beta version)");
-            System.out.println("[3] Hard (30 Sticks|Beta version)");
-            System.out.println("[4] Own amount of Sticks");
-
-
-            Chose = Input.nextInt();
-
-            if (Chose == 1) {
-                difficulty = 1;
-            } else if (Chose == 2) {
-                difficulty = 2;
-            } else if (Chose == 3) {
-                difficulty = 3;
-            } else if (Chose == 4) {
-                difficulty = 4;
-                System.out.println("How many Sticks would you like to have?");
-                OwnAmount = Input.nextInt();
-                if (OwnAmount <= 3) {
-                    System.out.println("Error, your chose has to be higher than 3!");
-
-                }
-            }
-
+        if(Chose == 1 )
+        {
+            PlayerCount();
+        }else if(Chose == 2)
+        {
+            Welcome();
+        }else if(Chose == 3)
+        {
+            StartSingleplayerGame();
+        }else if(Chose == 4)
+        {
+            StartGame();
         }
-        System.out.println("[+] New Game");
-        if (difficulty == 1) {
-            Matchsticks = 10;
-        } else if (difficulty == 2) {
-            Matchsticks = 20;
-        } else if (difficulty == 3) {
-            Matchsticks = 30;
-        } else if (difficulty == 4) {
-            Matchsticks = OwnAmount;
-        }
-        while (Matchsticks >= 1) {
-            //Only for "graphic" display
-                        /*if (Matchsticks == 10) {
-                            System.out.println("O O O O O O O O O O");
-                            System.out.println("I I I I I I I I I I");
-                        } else if (Matchsticks == 9) {
-                            System.out.println("O O O O O O O O O ");
-                            System.out.println("I I I I I I I I I ");
-                        } else if (Matchsticks == 8) {
-                            System.out.println("O O O O O O O O ");
-                            System.out.println("I I I I I I I I ");
-                        } else if (Matchsticks == 7) {
-                            System.out.println("O O O O O O O ");
-                            System.out.println("I I I I I I I ");
-                        } else if (Matchsticks == 6) {
-                            System.out.println("O O O O O O");
-                            System.out.println("I I I I I I");
-                        } else if (Matchsticks == 5) {
-                            System.out.println("O O O O O ");
-                            System.out.println("I I I I I ");
-                        } else if (Matchsticks == 4) {
-                            System.out.println("O O O O ");
-                            System.out.println("I I I I ");
-                        } else if (Matchsticks == 3) {
-                            System.out.println("O O O");
-                            System.out.println("I I I");
-                        } else if (Matchsticks == 2) {
-                            System.out.println("O O  ");
-                            System.out.println("I I  ");
-                        } else if (Matchsticks == 1) {
-                            System.out.println("O ");
-                            System.out.println("I");
-                        }*/
+    }
 
-            System.out.println("[+] Player1: Choose an amount of Matchsticks(1-3):");
-            MatchsticksInt = Input.nextInt();
-            Matchsticks = Matchsticks - MatchsticksInt;
-            System.out.println("[+]You took: " + MatchsticksInt + " Matchsticks");
-            System.out.println("[+]There are: " + Matchsticks + " left!");
+    public static void Player1()
+    {
+        System.out.println("Player 1, your turn");
+        StartGame();
+    }
+    public static void Player2()
+    {
+        System.out.println("Player 2, your turn");
+        StartGame();
+    }
+    public static void PlayerCount()
+    {
+        System.out.println("Choose one GAMEMODE:");
+        //System.out.println("[3] Singleplayer");
+        System.out.println("[4] Multiplayer");
+        Chose();
+    }
+    public static void StartSingleplayerGame()
+    {
 
-            //Only for "graphic" display
-            if (Matchsticks == 10) {
-                System.out.println("O O O O O O O O O O");
-                System.out.println("I I I I I I I I I I");
-            } else if (Matchsticks == 9) {
-                System.out.println("O O O O O O O O O ");
-                System.out.println("I I I I I I I I I ");
-            } else if (Matchsticks == 8) {
-                System.out.println("O O O O O O O O ");
-                System.out.println("I I I I I I I I ");
-            } else if (Matchsticks == 7) {
-                System.out.println("O O O O O O O ");
-                System.out.println("I I I I I I I ");
-            } else if (Matchsticks == 6) {
-                System.out.println("O O O O O O");
-                System.out.println("I I I I I I");
-            } else if (Matchsticks == 5) {
-                System.out.println("O O O O O ");
-                System.out.println("I I I I I ");
-            } else if (Matchsticks == 4) {
-                System.out.println("O O O O ");
-                System.out.println("I I I I ");
-            } else if (Matchsticks == 3) {
-                System.out.println("O O O");
-                System.out.println("I I I");
-            } else if (Matchsticks == 2) {
-                System.out.println("O O  ");
-                System.out.println("I I  ");
-            } else if (Matchsticks == 1) {
-                System.out.println("O ");
-                System.out.println("I");
-            }
+    }
+    public static void End1()
+    {
+        System.out.println("Game is over Player 1 Wins");
+        System.out.println("Congrats");
+    }
 
-            if (Matchsticks <= 0) {
-                System.out.println("[+]Round is over, Player 1 WINS");
-                return;
-            } else
-
-                System.out.println("[+]Player2: Choose an amount of Matchsticks(1-3):");
-            MatchsticksInt = Input.nextInt();
-            Matchsticks = Matchsticks - MatchsticksInt;
-            System.out.println("[+]You took: " + MatchsticksInt + " Matchsticks");
-            System.out.println("[+]There are: " + Matchsticks + " left!");
-
-            if (Matchsticks <= 0) {
-                System.out.println("[+]Round is over, Player 2 WINS");
-                return;
-
-            }
-
-        }
+    public static void End2()
+    {
+        System.out.println("Game is over Player 2 Wins");
+        System.out.println("Congrats");
     }
 }
